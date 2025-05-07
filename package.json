@@ -9,6 +9,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@clerk/astro": "2.7.1",
     "@supabase/supabase-js": "2.49.4",
     "@tailwindcss/vite": "4.1.5",
     "astro": "5.7.11",
@@ -25,5 +26,13 @@
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.6.11",
     "typescript-eslint": "8.32.0"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@clerk/shared"
+    ],
+    "onlyBuiltDependencies": [
+      "@clerk/shared"
+    ]
   }
 }
