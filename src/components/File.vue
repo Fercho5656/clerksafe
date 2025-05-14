@@ -78,25 +78,22 @@ const emit = defineEmits(['file-deleted'])
 
 async function downloadFile(fileName: string) {
   try {
-    const response = await fetch(`/api/files/${fileName}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    const response = await fetch(`/api/files/${fileName}`)
 
     if (!response.ok) {
       throw new Error('Network response was not ok')
     }
 
-    const { data } = await response.json()
+    const blob = await response.blob()
+
+    const url = URL.createObjectURL(blob)
 
     const a = document.createElement('a')
-    a.href = data.signedUrl
+    a.href = url
     a.download = fileName
     a.target = '_blank'
     a.rel = 'noopener noreferrer'
     document.body.appendChild(a)
-    console.log({ a })
     a.click()
     a.remove()
   } catch (error) {
@@ -105,7 +102,6 @@ async function downloadFile(fileName: string) {
 }
 
 async function deleteFile(fileName: string) {
-  console.log('Deleting file:', fileName)
   try {
     const response = await fetch(`/api/files`, {
       method: 'DELETE',
@@ -117,7 +113,6 @@ async function deleteFile(fileName: string) {
     }
 
     const result = await response.json()
-    console.log('File deleted successfully:', result)
     emit('file-deleted', fileName)
   } catch (error) {
     console.error('Error deleting file:', error)

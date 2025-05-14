@@ -13,7 +13,7 @@ export const GET: APIRoute = async ({ params, locals }) => {
 
   const { data, error } = await supabase.storage
     .from('userfiles')
-    .createSignedUrl(`${userId}/${name}`, 60)
+    .download(`${userId}/${name}`)
 
   if (error) {
     console.error('Error downloading file:', error)
@@ -25,15 +25,11 @@ export const GET: APIRoute = async ({ params, locals }) => {
     })
   }
 
-  return new Response(
-    JSON.stringify({
-      data,
-    }),
-    {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  return new Response(data, {
+    status: 200,
+    headers: {
+      'Content-Type': data.type,
+      'Content-Disposition': `attachment; filename="${name}"`,
     },
-  )
+  })
 }
