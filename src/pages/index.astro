@@ -1,11 +1,167 @@
 ---
-import Welcome from '../components/Welcome.astro'
-import Layout from '../layouts/Layout.astro'
+import Layout from '@/layouts/Layout.astro'
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from '@clerk/astro/components'
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const title = 'ClerkSafe — Comparte Archivos con Confianza'
 ---
 
-<Layout title="ClerkSafe">
-  <Welcome />
+<Layout title={title}>
+  <header class="bg-white shadow">
+    <div class="container mx-auto px-4 py-5 flex justify-between items-center">
+      <h1 class="text-xl font-bold text-gray-800">MyWebsite</h1>
+      <nav>
+        <ul class="flex items-center space-x-6">
+          <li>
+            <a href="# " class="text-gray-700 hover:text-blue-500 transition"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="#features"
+              class="text-gray-700 hover:text-blue-500 transition">Features</a
+            >
+          </li>
+          <li>
+            <a
+              href="#contact"
+              class="text-gray-700 hover:text-blue-500 transition">Contact</a
+            >
+          </li>
+          <li>
+            <SignedOut>
+              <SignInButton asChild mode="modal">
+                <button
+                  class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition duration-200 cursor-pointer"
+                >
+                  Iniciar sesión
+                </button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="bg-gradient-to-r from-blue-50 to-indigo-100 py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-4xl font-bold text-gray-800 mb-4">
+        Comparte archivos de forma segura, privada y con control total
+      </h2>
+      <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
+        SafeShare te permite compartir documentos confidenciales con control de
+        acceso granular, historial de actividad y protección por identidad.
+      </p>
+      <SignedOut>
+        <SignInButton asChild mode="modal">
+          <button
+            class="bg-blue-500 hover:bg-blue-600 cursor-pointer text-white font-semibold py-3 px-6 rounded-full transition duration-200"
+            >Comienza gratis</button
+          >
+        </SignInButton>
+      </SignedOut>
+    </div>
+  </section>
+
+  <section id="features" class="py-16 bg-white">
+    <div class="container mx-auto px-4 text-center">
+      <h3 class="text-3xl font-bold text-gray-800 mb-12">Why Choose Us?</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div
+          class="p-6 bg-gray-50 rounded-lg shadow hover:shadow-md transition duration-300"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-12 w-12 text-blue-500 mx-auto mb-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <h4 class="text-xl font-semibold text-gray-700 mb-2">
+            Fast Performance
+          </h4>
+          <p class="text-gray-600">
+            Astro ensures your site loads quickly and efficiently.
+          </p>
+        </div>
+
+        <div
+          class="p-6 bg-gray-50 rounded-lg shadow hover:shadow-md transition duration-300"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-12 w-12 text-blue-500 mx-auto mb-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M13 10V3L4 14h7v7l9-11z"></path>
+          </svg>
+          <h4 class="text-xl font-semibold text-gray-700 mb-2">
+            Modern Design
+          </h4>
+          <p class="text-gray-600">
+            Clean, responsive design with Tailwind CSS.
+          </p>
+        </div>
+
+        <div
+          class="p-6 bg-gray-50 rounded-lg shadow hover:shadow-md transition duration-300"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-12 w-12 text-blue-500 mx-auto mb-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              d="M9.663 17c.84 0 1.524-.136 2.112-.406.588-.27 1.096-.696 1.512-1.268a3.32 3.32 0 001.442-1.988V11c0-.432.144-.832.417-1.184A3.32 3.32 0 0015 6.663c-.324-.312-.668-.584-1.032-.816.496-.168.976-.384 1.432-.648.568-.336 1.136-.768 1.68-1.32.512-.512.964-1.064 1.384-1.664C20.292 2.64 19.744 2 19 2c-.736 0-1.376.56-1.584 1.28a3.32 3.32 0 00-1.48 2.448V9c0 .432-.144.832-.416 1.184A3.32 3.32 0 0015 14.337c-.324.312-.668.584-1.032 1.216.496.168.976.384 1.432.648.568.336 1.136.768 1.68 1.32.512.512.964 1.064 1.384 1.664C19.708 21.36 19.16 22 18.444 22c-.736 0-1.376-.56-1.584-1.28a3.32 3.32 0 00-1.48-2.448V13c0-.432.144-.832.416-1.184A3.32 3.32 0 0015 9.663v-.728a3.32 3.32 0 00-1.48-2.448C12.444 4.64 12 4 12 4c0 .704.324 1.328.852 1.856A3.32 3.32 0 0013 7.552V11c0 .432-.144.832-.416 1.184A3.32 3.32 0 0012 13.663v4.663a3.32 3.32 0 001.584 2.72c.208.72.756 1.272 1.48 1.272z"
+            ></path>
+          </svg>
+          <h4 class="text-xl font-semibold text-gray-700 mb-2">Easy to Use</h4>
+          <p class="text-gray-600">
+            Astro makes it easy to build and maintain your site with minimal
+            code.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="bg-blue-50 py-16">
+    <div class="container mx-auto px-4 text-center">
+      <h3 class="text-3xl font-bold text-gray-800 mb-4">
+        Ready to Get Started?
+      </h3>
+      <p class="text-lg text-gray-600 max-w-xl mx-auto mb-8">
+        Join thousands of developers who use Astro and Tailwind for fast, modern
+        web projects.
+      </p>
+      <a
+        href="# "
+        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-full transition duration-200"
+      >
+        Contact Us
+      </a>
+    </div>
+  </section>
+
+  <footer class="bg-gray-800 text-white py-10">
+    <div class="container mx-auto px-4 text-center">
+      <p>&copy; {new Date().getFullYear()} MyWebsite. All rights reserved.</p>
+      <div class="flex justify-center space-x-6 mt-4"></div>
+    </div>
+  </footer>
 </Layout>
