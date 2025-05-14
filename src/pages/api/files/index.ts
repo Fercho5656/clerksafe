@@ -83,8 +83,9 @@ export const DELETE: APIRoute = async ({ request, locals }) => {
 
   const supabase = await supabaseServer(locals)
 
-  const { fileId } = await request.json()
-  const filePath = `${userId}/${fileId}`
+  const { fileName } = await request.json()
+  const filePath = `${userId}/${fileName}`
+  console.log('Deleting file...', filePath)
 
   const { error } = await supabase.storage.from('userfiles').remove([filePath])
 
