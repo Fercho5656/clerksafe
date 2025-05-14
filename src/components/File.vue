@@ -12,7 +12,7 @@
       </p>
     </footer>
     <nav class="flex justify-evenly" :data-file-name="props.file.name">
-      <button
+      <button @click="downloadFile(props.file.name)"
         class="mt-2 px-4 py-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600 transition-colors duration-100"
         aria-label="Download file">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -76,7 +76,36 @@ interface Props {
 const props = defineProps<Props>()
 const emit = defineEmits(['file-deleted'])
 
+async function downloadFile(fileName: string) {
+  try {
+    const response = await fetch(`/api/files/${fileName}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+
+    const { data } = await response.json()
+
+    const a = document.createElement('a')
+    a.href = data.signedUrl
+    a.download = fileName
+    a.target = '_blank'
+    a.rel = 'noopener noreferrer'
+    document.body.appendChild(a)
+    console.log({ a })
+    a.click()
+    a.remove()
+  } catch (error) {
+    console.error('Error downloading file:', error)
+  }
+}
+
 async function deleteFile(fileName: string) {
+  console.log('Deleting file:', fileName)
   try {
     const response = await fetch(`/api/files`, {
       method: 'DELETE',
