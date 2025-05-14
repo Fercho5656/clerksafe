@@ -1,0 +1,36 @@
+---
+import FileUpload from '@/components/FileUpload.astro'
+import Layout from '@/layouts/Layout.astro'
+import { fetchUserFiles } from '@/lib/storage'
+import { supabaseServer } from '@/lib/supabase'
+import { UserButton } from '@clerk/astro/components'
+import FilesGrid from '@/components/FilesGrid.vue'
+
+const supabase = await supabaseServer(Astro.locals)
+
+const user = await Astro.locals.currentUser()
+if (!user) return new Response('Unauthorized', { status: 401 })
+
+const files = await fetchUserFiles(user.id, supabase)
+---
+
+<Layout title="Safe">
+  <header>
+    <nav>
+      <div
+        class="container mx-auto px-4 py-5 flex justify-between items-center"
+      >
+        <h1 class="text-xl font-bold text-gray-800">My Files</h1>
+        <div>
+          <UserButton />
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="mb-8">
+    <FileUpload />
+  </div>
+  <FilesGrid client:load files={files} />
+</Layout>
+
+<script></script>
