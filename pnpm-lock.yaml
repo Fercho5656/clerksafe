@@ -14,6 +14,9 @@ importers:
       '@clerk/astro':
         specifier: 2.7.1
         version: 2.7.1(astro@5.7.11(@types/node@22.15.14)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.40.2)(typescript@5.8.3))(react@19.1.0)
+      '@nanostores/vue':
+        specifier: 1.0.0
+        version: 1.0.0(nanostores@1.0.1)(vue@3.5.13(typescript@5.8.3))
       '@supabase/supabase-js':
         specifier: 2.49.4
         version: 2.49.4
@@ -23,6 +26,9 @@ importers:
       astro:
         specifier: 5.7.11
         version: 5.7.11(@types/node@22.15.14)(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.40.2)(typescript@5.8.3)
+      nanostores:
+        specifier: 1.0.1
+        version: 1.0.1
       tailwindcss:
         specifier: 4.1.5
         version: 4.1.5
@@ -601,6 +607,20 @@ packages:
   '@modelcontextprotocol/sdk@1.11.0':
     resolution: {integrity: sha512-k/1pb70eD638anoi0e8wUGAlbMJXyvdV4p62Ko+EZ7eBe1xMx8Uhak1R5DgfoofsK5IBBnRwsYGTaLZl+6/+RQ==}
     engines: {node: '>=18'}
+
+  '@nanostores/vue@1.0.0':
+    resolution: {integrity: sha512-+WtqBD0YXZoMmk7rjRrm0yd2F8e2O3yOk6jR3vpUREBj7UaKEEKpMrPpkpcltboL5ShlYYP0QkSwkpaMwmigOQ==}
+    engines: {node: ^20.0.0 || >=22.0.0}
+    peerDependencies:
+      '@nanostores/logger': ^0.4.0 || ^1.0.0
+      '@vue/devtools-api': '>=7.6.2'
+      nanostores: ^0.11.3 || ^1.0.0
+      vue: '>=3.3.1'
+    peerDependenciesMeta:
+      '@nanostores/logger':
+        optional: true
+      '@vue/devtools-api':
+        optional: true
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2386,6 +2406,10 @@ packages:
     resolution: {integrity: sha512-TUes3xKIX33re4QzdxwZ6tdbodjmn3tWXCEc1uokiEmo14sI1EaGYNs2k3bU2pyyGNmBqFGAVl6jAGWd06AVIg==}
     engines: {node: ^18.0.0 || >=20.0.0}
 
+  nanostores@1.0.1:
+    resolution: {integrity: sha512-kNZ9xnoJYKg/AfxjrVL4SS0fKX++4awQReGqWnwTRHxeHGZ1FJFVgTqr/eMrNQdp0Tz7M7tG/TDaX8QfHDwVCw==}
+    engines: {node: ^20.0.0 || >=22.0.0}
+
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
@@ -3979,6 +4003,11 @@ snapshots:
       zod-to-json-schema: 3.24.5(zod@3.24.4)
     transitivePeerDependencies:
       - supports-color
+
+  '@nanostores/vue@1.0.0(nanostores@1.0.1)(vue@3.5.13(typescript@5.8.3))':
+    dependencies:
+      nanostores: 1.0.1
+      vue: 3.5.13(typescript@5.8.3)
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -6217,6 +6246,8 @@ snapshots:
   nanoid@5.1.5: {}
 
   nanostores@0.11.3: {}
+
+  nanostores@1.0.1: {}
 
   natural-compare@1.4.0: {}
 
