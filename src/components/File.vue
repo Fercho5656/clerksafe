@@ -34,7 +34,7 @@
           <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
         </svg>
       </button>
-      <button
+      <button @click="handleShareClick"
         class="mt-2 px-4 py-2 bg-green-500 text-white rounded cursor-pointer hover:bg-green-600 transition-colors duration-100"
         aria-label="Share file">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -53,10 +53,7 @@
 
 <script setup lang="ts">
 import { formatBytes } from '@/lib/string'
-import Download from '@/icons/download.svg'
-import Share from '@/icons/share.svg'
-import Delete from '@/icons/delete.svg'
-import type FileObject from '@supabase/supabase-js'
+import { $shareModal, $shareFileName } from '@/store/modalStore'
 
 const genericThumbnail = 'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP8z8BQz0AEYBxVSF+FABJADveWkH6oAAAAAElFTkSuQmCC'
 
@@ -117,5 +114,10 @@ async function deleteFile(fileName: string) {
   } catch (error) {
     console.error('Error deleting file:', error)
   }
+}
+
+const handleShareClick = () => {
+  $shareFileName.set(props.file.name)
+  $shareModal.set(true)
 }
 </script>
