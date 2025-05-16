@@ -5,6 +5,13 @@ export const GET: APIRoute = async ({ params, locals }) => {
   const { name } = params
   const { userId } = locals.auth()
 
+  if (!name) {
+    return new Response(JSON.stringify({ error: 'File name is required' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+
   if (!userId) {
     return new Response('Unauthorized', { status: 401 })
   }
