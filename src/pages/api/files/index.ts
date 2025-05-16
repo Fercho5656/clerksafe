@@ -67,6 +67,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         created_by: userId,
         bucket_name: 'userfiles',
         object_path: filePath,
+        file_name: fileName,
         thumbnail,
       },
     ])
