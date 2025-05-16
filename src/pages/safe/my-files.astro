@@ -1,7 +1,7 @@
 ---
 import FileUpload from '@/components/FileUpload.astro'
 import Layout from '@/layouts/Layout.astro'
-import { fetchUserFiles } from '@/lib/storage'
+import { fetchUserFiles } from '@/lib/db/files'
 import { supabaseServer } from '@/lib/supabase'
 import { UserButton } from '@clerk/astro/components'
 import FilesGrid from '@/components/FilesGrid.vue'

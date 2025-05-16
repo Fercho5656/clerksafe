@@ -9,12 +9,12 @@ export const fetchUserFiles = async (
     return []
   }
 
-  const { data, error } = await supabaseClient.storage
-    .from('userfiles')
-    .list(userId, {
-      limit: 50,
-      offset: 0,
-    })
+  const { data, error } = await supabaseClient
+    .from('files')
+    .select('*')
+    .eq('created_by', userId)
+    .limit(50)
+    .order('created_at', { ascending: false })
 
   if (error) {
     console.error('Error fetching files:', error)
