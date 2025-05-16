@@ -68,7 +68,7 @@ const handleCreateShareForm = async (event: Event) => {
 
 <template>
   <Dialog :show-modal=showModal :title=dialogTitle @update:show-modal="closeDialog">
-    <div class="p-4 text-center">
+    <div class="p-4 pt-0 text-center">
       <div v-if="shares.length === 0" class="flex flex-col items-center justify-center gap-y-2">
         <p class="">
           No share links created yet.
@@ -81,6 +81,16 @@ const handleCreateShareForm = async (event: Event) => {
         <ul class="flex flex-col gap-y-2 mt-4">
           <li v-for="share in shares" :key="share.id" class="flex items-center justify-between">
             <table class="w-full">
+              <thead>
+                <tr>
+                  <th class="text-left text-gray-900 font-semibold">
+                    Shared With
+                  </th>
+                  <th class="text-left text-gray-900 font-semibold">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
               <tbody>
                 <tr>
                   <td class="text-gray-500 flex font-semibold justify-start items-center gap-x-2">
@@ -92,15 +102,23 @@ const handleCreateShareForm = async (event: Event) => {
                     </p>
                   </td>
                   <td class="text-sm text-gray-500">
-                    <button @click="deleteShare(share.id)" class="text-red-500 hover:text-red-700 cursor-pointer">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-trash-icon lucide-trash">
-                        <path d="M3 6h18" />
-                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                      </svg>
-                    </button>
+                    <div class="flex">
+                      <button @click="deleteShare(share.id)" class="text-red-500 hover:text-red-700 cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                          class="lucide lucide-trash-icon lucide-trash">
+                          <path d="M3 6h18" />
+                          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                        </svg>
+                      </button>
+                      <div class="flex flex-col">
+                        <label for="requires-mfa" class="text-sm text-gray-500 cursor-pointer">
+                          MFA
+                        </label>
+                        <input type="checkbox" name="requires_mfa" id="requires-mfa" class="" />
+                      </div>
+                    </div>
                   </td>
                 </tr>
               </tbody>
