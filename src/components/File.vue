@@ -7,7 +7,7 @@
         {{ props.file.file_name }}
       </h3>
       <p class="text-gray-600">
-        {{ formatBytes(125) }} •
+        {{ formatBytes(props.file.size) }} •
         {{ new Date(props.file.created_at).toLocaleDateString() }}
       </p>
     </footer>
@@ -64,6 +64,7 @@ interface File {
   thumbnail: string
   created_at: string
   file_name: string
+  size: number
 }
 
 interface Props {
