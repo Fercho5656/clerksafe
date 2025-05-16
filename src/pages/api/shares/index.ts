@@ -16,7 +16,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       .from('shares')
       .insert({
         file_id: formData.get('file_id'),
-        shared_with: [formData.get('shared_with')],
+        shared_with: formData.get('shared_with'),
       })
       .select()
 
