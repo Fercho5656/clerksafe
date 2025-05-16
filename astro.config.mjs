@@ -8,6 +8,9 @@ import vue from '@astrojs/vue'
 export default defineConfig({
   integrations: [clerk(), vue()],
   output: 'server',
+  server: {
+    allowedHosts: [import.meta.env.CLERK_WEBHOOK_URL]
+  },
   vite: {
     plugins: [tailwindcss()],
   },
