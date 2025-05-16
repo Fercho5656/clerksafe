@@ -1,18 +1,18 @@
 <template>
   <article class="flex flex-col bg-white shadow-md rounded-lg p-4 aspect-square">
-    <img :src="props.file.metadata.thumbnail || genericThumbnail" alt="File Preview"
+    <img :src="props.file.thumbnail || genericThumbnail" alt="File Preview"
       class="w-64 h-auto object-cover rounded-xs" />
     <footer class="mt-2">
       <h3 class="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap">
-        {{ props.file.name }}
+        {{ props.file.file_name }}
       </h3>
       <p class="text-gray-600">
-        {{ formatBytes(props.file.metadata.size) }} •
+        {{ formatBytes(125) }} •
         {{ new Date(props.file.created_at).toLocaleDateString() }}
       </p>
     </footer>
-    <nav class="flex justify-evenly" :data-file-name="props.file.name">
-      <button @click="downloadFile(props.file.name)"
+    <nav class="flex justify-evenly" :data-file-name="props.file.object_path">
+      <button @click="downloadFile(props.file.file_name)"
         class="mt-2 px-4 py-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600 transition-colors duration-100"
         aria-label="Download file">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -23,7 +23,7 @@
           <line x1="12" x2="12" y1="15" y2="3" />
         </svg>
       </button>
-      <button @click="deleteFile(props.file.name)" data-delete-button
+      <button @click="deleteFile(props.file.file_name)" data-delete-button
         class="mt-2 px-4 py-2 bg-red-500 text-white rounded cursor-pointer hover:bg-red-600 transition-colors duration-100"
         aria-label="Delete file">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -53,17 +53,17 @@
 
 <script setup lang="ts">
 import { formatBytes } from '@/lib/string'
-import { $shareModal, $shareFileName } from '@/store/modalStore'
+import { $shareModal, $shareFile } from '@/store/share'
 
 const genericThumbnail = 'data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mP8z8BQz0AEYBxVSF+FABJADveWkH6oAAAAAElFTkSuQmCC'
 
 interface File {
-  name: string
   id: string
-  updated_at: string
+  object_path: string
+  bucket_name: string
+  thumbnail: string
   created_at: string
-  last_accessed_at: string
-  metadata: Record<string, any>
+  file_name: string
 }
 
 interface Props {
@@ -117,7 +117,11 @@ async function deleteFile(fileName: string) {
 }
 
 const handleShareClick = () => {
-  $shareFileName.set(props.file.name)
+  console.log('Sharing file: ', props.file.id)
+  $shareFile.set({
+    fileId: props.file.id,
+    fileName: props.file.object_path,
+  })
   $shareModal.set(true)
 }
 </script>
