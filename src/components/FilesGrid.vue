@@ -1,6 +1,7 @@
 <template>
   <div class="p-5 grid grid-cols-3 md:grid-cols-5 xl:grid-cols-8 grid-rows-5 gap-5">
-    <File v-for="file in fileArray" :key="file.id" :file="file" @file-deleted="removeFile" />
+    <File v-for="file in fileArray" :key="file.id" :file="file" @file-deleted="removeFile"
+      :is-my-own-file="props.isMyOwnFile" />
   </div>
 </template>
 
@@ -11,9 +12,12 @@ import { ref } from 'vue'
 
 interface Props {
   files: Record<string, any>[]
+  isMyOwnFile?: boolean
 }
 
 const props = defineProps<Props>()
+
+console.log({ props })
 
 const fileArray = ref(props.files)
 

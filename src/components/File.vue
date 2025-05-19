@@ -12,7 +12,7 @@
       </p>
     </footer>
     <nav class="flex justify-evenly" :data-file-name="props.file.object_path">
-      <button @click="downloadFile(props.file.file_name)"
+      <button @click="downloadFile(props.file.id)"
         class="mt-2 px-4 py-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600 transition-colors duration-100"
         aria-label="Download file">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -23,7 +23,7 @@
           <line x1="12" x2="12" y1="15" y2="3" />
         </svg>
       </button>
-      <button @click="deleteFile(props.file.file_name)" data-delete-button
+      <button v-if="props.isMyOwnFile" @click="deleteFile(props.file.file_name)" data-delete-button
         class="mt-2 px-4 py-2 bg-red-500 text-white rounded cursor-pointer hover:bg-red-600 transition-colors duration-100"
         aria-label="Delete file">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -34,7 +34,7 @@
           <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
         </svg>
       </button>
-      <button @click="handleShareClick"
+      <button v-if="props.isMyOwnFile" @click="handleShareClick"
         class="mt-2 px-4 py-2 bg-green-500 text-white rounded cursor-pointer hover:bg-green-600 transition-colors duration-100"
         aria-label="Share file">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -69,6 +69,7 @@ interface File {
 
 interface Props {
   file: File
+  isMyOwnFile?: boolean
 }
 
 const props = defineProps<Props>()

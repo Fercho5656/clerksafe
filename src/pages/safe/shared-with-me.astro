@@ -1,7 +1,6 @@
 ---
-import FileUpload from '@/components/FileUpload.astro'
 import Layout from '@/layouts/Layout.astro'
-import { fetchUserFiles } from '@/lib/db/files'
+import { fetchFilesSharedWithUser } from '@/lib/db/files'
 import { supabaseServer } from '@/lib/supabase'
 import { UserButton } from '@clerk/astro/components'
 import FilesGrid from '@/components/FilesGrid.vue'
@@ -12,26 +11,28 @@ const supabase = await supabaseServer(Astro.locals)
 const user = await Astro.locals.currentUser()
 if (!user) return new Response('Unauthorized', { status: 401 })
 
-const files = await fetchUserFiles(user.id, supabase)
+const filesSharedWithMe = await fetchFilesSharedWithUser(
+  user.emailAddresses[0].emailAddress,
+  supabase
+)
+
+const files = filesSharedWithMe.map((file) => file.files)
 ---
 
-<Layout title="Safe">
+<Layout title="Shared With Me">
   <header>
     <nav>
       <div
         class="container mx-auto px-4 py-5 flex justify-between items-center"
       >
-        <h1 class="text-xl font-bold text-gray-800">My Files</h1>
+        <h1 class="text-xl font-bold text-gray-800">Files Shared With Me</h1>
         <div>
           <UserButton />
         </div>
       </div>
     </nav>
   </header>
-  <div class="mb-8">
-    <FileUpload />
-  </div>
-  <FilesGrid client:load files={files} isMyOwnFile />
+  <FilesGrid client:load files={files} :isMyOwnFile={false} />
   <ShareDialog client:load />
 </Layout>
 
