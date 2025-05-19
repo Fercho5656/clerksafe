@@ -23,3 +23,27 @@ export const fetchUserFiles = async (
 
   return data
 }
+
+export const fetchFilesSharedWithUser = async (
+  userEmail: string,
+  supabaseClient: SupabaseClient,
+) => {
+  if (!userEmail) {
+    console.error('No user email provided')
+    return []
+  }
+
+  const { data, error } = await supabaseClient
+    .from('shares')
+    .select('*, files(*)') // ← esto es el "join"
+    .eq('shared_with', userEmail) // ← filtro directo de shares
+
+  console.log({ data })
+
+  if (error) {
+    console.error('Error fetching shared files:', error)
+    return []
+  }
+
+  return data
+}
