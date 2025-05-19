@@ -21,14 +21,14 @@ export const GET: APIRoute = async (context) => {
 
   const supabase = await supabaseServer(locals)
 
-  const { data: user, error: userError } = await supabase
+  const { data: file, error: fileError } = await supabase
     .from('files')
-    .select('object_path, id')
+    .select('object_path, id, created_by')
     .eq('id', name)
     .single()
 
-  if (userError) {
-    console.error('Error fetching file:', userError)
+  if (fileError) {
+    console.error('Error fetching file:', fileError)
     return new Response(JSON.stringify({ error: 'Error fetching file' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
@@ -39,8 +39,8 @@ export const GET: APIRoute = async (context) => {
 
   const { data: fileShare, error: fileShareError } = await supabase
     .from('shares')
-    .select('requires_mfa, users(id)')
-    .eq('file_id', user.id)
+    .select('requires_mfa, users(*)')
+    .eq('file_id', file.id)
     .eq('users.id', userId)
 
   if (fileShareError) {
@@ -55,7 +55,8 @@ export const GET: APIRoute = async (context) => {
   }
 
   // If MFA is required, check if the user has MFA enabled
-  if (fileShare[0]?.requires_mfa) {
+  // Only check MFA for users who didn't create the file
+  if (file.created_by !== userId && fileShare[0]?.requires_mfa) {
     try {
       const clerkUser = await clerkClient(context).users.getUser(userId)
 
@@ -78,7 +79,7 @@ export const GET: APIRoute = async (context) => {
     }
   }
 
-  const { object_path } = user
+  const { object_path } = file
 
   const { data, error } = await supabase.storage
     .from('userfiles')
