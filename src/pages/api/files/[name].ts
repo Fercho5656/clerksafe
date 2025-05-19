@@ -42,8 +42,6 @@ export const GET: APIRoute = async (context) => {
     .select('requires_mfa, users(id)')
     .eq('file_id', user.id)
     .eq('users.id', userId)
-    .limit(1)
-    .single()
 
   if (fileShareError) {
     console.error('Error fetching file share:', fileShareError)
@@ -57,7 +55,7 @@ export const GET: APIRoute = async (context) => {
   }
 
   // If MFA is required, check if the user has MFA enabled
-  if (fileShare.requires_mfa) {
+  if (fileShare[0]?.requires_mfa) {
     try {
       const clerkUser = await clerkClient(context).users.getUser(userId)
 
