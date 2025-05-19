@@ -18,7 +18,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         file_id: formData.get('file_id'),
         shared_with: formData.get('shared_with'),
       })
-      .select()
+      .select('*, users(*)')
 
     if (error) {
       console.error('Error creating share:', error)
