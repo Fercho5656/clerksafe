@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div class="bg-white rounded-lg shadow-lg w-96 p-6">
+      <div class="bg-white rounded-lg shadow-lg max-w-3xl p-6">
         <header class="flex justify-between items-center border-b pb-2">
           <h2 class="text-lg font-semibold truncate">{{ title }}</h2>
           <button @click="closeDialog" class="text-gray-500 hover:text-gray-700 cursor-pointer -mr-3 -mt-5">
@@ -12,7 +12,7 @@
             </svg>
           </button>
         </header>
-        <main>
+        <main class="my-3">
           <slot />
         </main>
         <footer class="flex justify-end mt-4">
