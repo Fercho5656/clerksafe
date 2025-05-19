@@ -68,6 +68,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
         bucket_name: 'userfiles',
         object_path: filePath,
         file_name: fileName,
+        size: file.size,
         thumbnail,
       },
     ])
@@ -83,12 +84,15 @@ export const POST: APIRoute = async ({ request, locals }) => {
     console.log('File uploaded successfully:', uploadData)
   }
 
-  return new Response('Files processed successfully', {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json',
+  return new Response(
+    JSON.stringify({ message: 'Files uploaded successfully' }),
+    {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
     },
-  })
+  )
 }
 
 /**
