@@ -13,9 +13,9 @@ export const GET: APIRoute = async ({ params, locals }) => {
 
   const { data, error } = await supabase
     .from('shares')
-    .select('*, files(*), users(*)') // ← esto es el "join"
-    .eq('file_id', id) // ← filtro directo de shares
-    .eq('files.created_by', userId) // ← esto hace el efecto del INNER JOIN
+    .select('*, files(*), users(*)')
+    .eq('file_id', id)
+    .eq('files.created_by', userId)
 
   if (error) {
     console.error('Error fetching shares:', error)
@@ -24,10 +24,6 @@ export const GET: APIRoute = async ({ params, locals }) => {
       headers: { 'Content-Type': 'application/json' },
     })
   }
-
-  console.log({ data })
-  console.log({ file: data[0].files })
-  console.log({ user: data[0].users })
 
   return new Response(JSON.stringify(data), {
     status: 200,
