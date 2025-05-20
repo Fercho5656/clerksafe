@@ -14,9 +14,9 @@ const FILE_THUMBNAIL =
   'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWZpbGUtaWNvbiBsdWNpZGUtZmlsZSI+PHBhdGggZD0iTTE1IDJINmEyIDIgMCAwIDAtMiAydjE2YTIgMiAwIDAgMCAyIDJoMTJhMiAyIDAgMCAwIDItMlY3WiIvPjxwYXRoIGQ9Ik0xNCAydjRhMiAyIDAgMCAwIDIgMmg0Ii8+PC9zdmc+'
 
 const TEMP_THUMBNAILS: Record<string, string> = {
-  'image/': IMAGE_THUMBNAIL,
-  'video/': VIDEO_THUMBNAIL,
-  'application/pdf': PDF_THUMBNAIL,
+  image: IMAGE_THUMBNAIL,
+  video: VIDEO_THUMBNAIL,
+  application: PDF_THUMBNAIL,
   generic: FILE_THUMBNAIL,
 }
 
@@ -43,6 +43,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     const file = value as File
     const fileName = file.name
     const fileType = file.type
+    console.log(fileType.split('/')[0])
     const thumbnail =
       TEMP_THUMBNAILS[fileType.split('/')[0]] || TEMP_THUMBNAILS.generic
 
