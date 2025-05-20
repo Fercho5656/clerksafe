@@ -79,6 +79,22 @@ export const GET: APIRoute = async (context) => {
     }
   }
 
+  // if the user is not the owner of the file and the share doesn't include the user
+
+  if (
+    file.created_by !== userId &&
+    (!fileShare[0]?.users || fileShare[0]?.users?.id !== userId)
+  ) {
+    console.log('userId', userId)
+    return new Response(
+      JSON.stringify({ error: 'File is not being shared with you anymore' }),
+      {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' },
+      },
+    )
+  }
+
   const { object_path } = file
 
   const { data, error } = await supabase.storage
