@@ -52,19 +52,34 @@ const props = defineProps<Props>()
 const hasMFA = ref(props.share.requires_mfa)
 const expireDate = ref(props.share.expires_at ? new Date(props.share.expires_at!).toISOString().split('T')[0] : undefined)
 
-const handleMFAChange = () => {
+const handleMFAChange = async () => {
   // Logic to handle MFA change
   console.log(`MFA changed to: ${hasMFA.value}`)
 }
 
-const handleExpireDateChange = () => {
+const handleExpireDateChange = async () => {
   // Logic to handle expiration date change
   console.log(`Expiration date changed to: ${expireDate.value}`)
 }
 
-const deleteShare = (id: string) => {
+const deleteShare = async (id: string) => {
   // Logic to delete the share
   console.log(`Deleting share with ID: ${id}`)
+
+  try {
+    const response = await fetch(`/api/shares/${id}`, {
+      method: 'DELETE',
+    })
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+
+    // Optionally, you can handle the response or update the UI
+    console.log(`Share with ID ${id} deleted successfully`)
+  } catch (error) {
+    console.error('Error deleting share:', error)
+  }
 }
 </script>
 
