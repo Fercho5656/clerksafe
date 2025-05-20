@@ -1,13 +1,13 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="flex flex-col gap-4 max-w-md p-6 bg-white shadow-md rounded-lg">
-    <h2 class="text-xl font-semibold">Upload New File</h2>
+  <form @submit.prevent="handleSubmit" class="flex flex-col gap-4 max-w-md p-6 bg-gray-800 shadow-md rounded-lg">
+    <h2 class="text-xl font-semibold text-white">Upload New File</h2>
 
     <div>
-      <label for="input-files" class="block text-sm font-medium text-gray-700 mb-1">
+      <label for="input-files" class="block text-sm font-medium text-gray-300 mb-1">
         Select a file
       </label>
       <input ref="fileInput" type="file" id="input-files" name="input-files"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+        class="w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm bg-gray-700 text-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
         multiple required />
     </div>
 
