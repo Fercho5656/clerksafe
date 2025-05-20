@@ -19,8 +19,10 @@ const files = await fetchUserFiles(user.id, supabase)
   <div class="mb-8">
     <FileUpload client:load />
   </div>
-  <FilesGrid client:load files={files} isMyOwnFile />
-  <ShareDialog client:load />
+  <div class="container">
+    <FilesGrid client:load files={files} isMyOwnFile />
+    <ShareDialog client:load />
+  </div>
 </Layout>
 
 <script></script>
