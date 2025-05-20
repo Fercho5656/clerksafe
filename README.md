@@ -1,48 +1,52 @@
-# Astro Starter Kit: Basics
+# 🔐 Clerk Safe: Plataforma de Compartición de Archivos
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+Aplicación web para compartir archivos de forma segura y controlada, construida con **Clerk** para la autenticación y **Supabase** para el almacenamiento de archivos
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+> 🏆 Proyecto desarrollado para la [Hackathon de Midudev](https://www.twitch.tv/midudev) con [Clerk](https://clerk.dev) — utilizando únicamente el plan gratuito de Clerk (en modo desarrollo ya que las funciones de MFA no son gratuitas en prod).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+URL: https://clerksafe.vercel.app
+Repositorio: https://github.com/Fercho5656/clerksafe
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+Usuarios de prueba:
+| Email | Password |
+|-------------------|--------------------------------------------|
+| user1@test.com | passwordhackathon|
 
-## 🚀 Project Structure
+## ✨ Funcionalidades
 
-Inside of your Astro project, you'll see the following folders and files:
+- 🧾 **Compartición Granular de Archivos**: Comparte el mismo archivo con varias personas, cada una con condiciones y fechas de expiración diferentes.
+- 📂 **Autenticación con Clerk**: Integración completa con Clerk (Sign up, Sign in, MFA), incluyendo autorización apoyada en políticas RLS en PostgreSQL.
+- 🔒 **Acceso Expirable y Revocable**: Puedes modificar o revocar permisos en cualquier momento. Las compartidas se invalidan automáticamente.
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## 🛠 Stack Tecnológico
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+| Capa              | Tecnología                                 |
+|-------------------|--------------------------------------------|
+| Frontend          | [Astro](https://astro.build) + [TailwindCSS](https://tailwindcss.com) |
+| Autenticación     | [Clerk](https://clerk.dev) (plan gratuito) |
+| Almacenamiento    | [Supabase Storage](https://supabase.com/storage) |
+| Backend API       | API Routes de Astro                         |
+| Base de datos     | PostgreSQL en Supabase                     |
+| Deploy            | Vercel       |
 
-## 🧞 Commands
+## 🔗 Casos de Uso
 
-All commands are run from the root of the project, from a terminal:
+- Compartir un documento con un cliente por 3 días.
+- Dar acceso permanente a un colaborador.
+- Protección de documentos con MFA (Solo se podrá descargar un archivo si el usuario tiene 2FA activado)
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+## 📦 Instrucciones de Instalación
 
-## 👀 Want to learn more?
+1. Clona este repositorio.
+2. Crea un proyecto en Supabase e incluye `SUPABASE_URL` y `SUPABASE_ANON_KEY` en las variables de entorno
+3. Configura Clerk e incluye `PUBLIC_CLERK_PUBLISHABLE_KEY`, `CLERK_SECRET_KEY` y `CLERK_WEBHOOK_URL` en las variables de entorno.
+5. Despliega en Vercel (SSR habilitado).
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## 📃 Licencia
+
+MIT License
+
+---
+
+Hecho con ❤️ para la Hackathon de Midudev con Clerk.
+README escrito con ChatGPT 😂
