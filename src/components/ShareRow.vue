@@ -1,42 +1,47 @@
 <template>
-  <tr class="flex items-center justify-between">
-    <td class="text-gray-500 flex font-semibold justify-start items-center gap-x-2">
+  <div class="flex w-full items-center justify-end bg-gray-800 text-gray-200 p-4 rounded-lg gap-x-8">
+    <div class="flex items-center gap-x-8">
       <img :src="props.share.users.image_url"
-        :alt="`${props.share.users.first_name} ${props.share.users.last_name}'s profile pic'`"
-        class="w-10 h-10 rounded-full" />
-      <p>
-        {{ props.share.users.first_name }} {{ props.share.users.last_name }}
-      </p>
-    </td>
-    <td class="text-sm text-gray-500">
-      <div class="flex gap-x-5 items-end">
-        <div class="flex flex-col justify-center">
-          <label for="requires-mfa" class="text-sm text-gray-500 cursor-pointer select-none">
-            MFA
-          </label>
-          <input v-model="hasMFA" @change="handleMFAChange" type="checkbox" name="requires_mfa" id="requires-mfa"
-            class="" />
-        </div>
-        <div class="flex flex-col ml-2">
-          <label for="expiration-date" class="text-sm text-gray-500 cursor-pointer select-none">
-            Expires
-          </label>
-          <input v-model="expireDate" @change="handleExpireDateChange" type="date" id="expiration-date"
-            name="expiration_date" class="p-1 text-xs border border-gray-300 rounded"
-            :min="new Date().toISOString().split('T')[0]" />
-        </div>
-        <button @click="deleteShare(props.share.id)" class="text-red-500 hover:text-red-700 cursor-pointer">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="lucide lucide-trash-icon lucide-trash">
-            <path d="M3 6h18" />
-            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-          </svg>
-        </button>
+        :alt="`${props.share.users.first_name} ${props.share.users.last_name}'s profile pic`"
+        class="w-12 h-12 rounded-full border-2 border-gray-600 shadow-sm" />
+      <div>
+        <p class="font-semibold text-lg">
+          {{ props.share.users.first_name }} {{ props.share.users.last_name }}
+        </p>
+        <p class="text-sm text-gray-400">
+          {{ props.share.users.email }}
+        </p>
       </div>
-    </td>
-  </tr>
+    </div>
+    <div class="flex items-center gap-x-8">
+      <div class="flex flex-col items-center">
+        <label for="requires-mfa" class="text-sm font-medium cursor-pointer select-none">
+          Require MFA?
+        </label>
+        <input v-model="hasMFA" @change="handleMFAChange" type="checkbox" name="requires_mfa" id="requires-mfa"
+          class="bg-gray-700 border-gray-600 text-gray-200 rounded focus:ring focus:ring-blue-500" />
+      </div>
+      <div class="flex flex-col items-center">
+        <label for="expiration-date" class="text-sm font-medium cursor-pointer select-none">
+          Share Expiration Date
+        </label>
+        <input v-model="expireDate" @change="handleExpireDateChange" type="date" id="expiration-date"
+          name="expiration_date"
+          class="p-2 text-sm border border-gray-600 rounded bg-gray-700 text-gray-200 focus:ring focus:ring-blue-500"
+          :min="new Date().toISOString().split('T')[0]" />
+      </div>
+      <button @click="deleteShare(props.share.id)"
+        class="flex items-center justify-center p-2 text-red-400 hover:text-red-600 rounded-full hover:bg-gray-700 transition cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          class="lucide lucide-trash-icon lucide-trash">
+          <path d="M3 6h18" />
+          <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+          <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+        </svg>
+      </button>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
