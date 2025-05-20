@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 grid grid-cols-3 md:grid-cols-5 xl:grid-cols-8 grid-rows-5 gap-5">
+  <div class="p-5 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 grid-rows-auto gap-5">
     <File v-for="file in fileArray" :key="file.id" :file="file" @file-deleted="removeFile"
       :is-my-own-file="props.isMyOwnFile" />
   </div>

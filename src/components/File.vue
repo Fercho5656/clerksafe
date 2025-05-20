@@ -1,5 +1,5 @@
 <template>
-  <article class="flex flex-col bg-gray-800 text-gray-300 shadow-md rounded-lg p-4 aspect-square">
+  <article class="flex flex-col bg-gray-800 text-gray-300 shadow-md rounded-lg p-4">
     <header class="flex w-full justify-ender">
       <FileDropdown :file="file" :is-my-own-file class="ml-auto" @file-deleted="handleDelete" />
     </header>
