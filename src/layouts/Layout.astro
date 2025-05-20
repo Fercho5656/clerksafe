@@ -34,7 +34,7 @@ const { pathname } = Astro.url
         <a class="flex items-center" href="/" target="_blank" rel="noopener">
           <Image
             src={clerkSafeIcon}
-            alt="🔒"
+            alt="ClerkSafe Icon"
             class="w-12 h-12 rounded-full mr-2"
             width={50}
             height={50}
@@ -48,21 +48,22 @@ const { pathname } = Astro.url
               <li>
                 <a
                   href="# "
-                  class="text-gray-400 hover:text-blue-400 transition">Home</a
+                  class="text-gray-200 hover:text-blue-300 transition"
+                  aria-label="Navigate to Home">Home</a
                 >
               </li>
               <li>
                 <a
                   href="#features"
-                  class="text-gray-400 hover:text-blue-400 transition"
-                  >Features</a
+                  class="text-gray-200 hover:text-blue-300 transition"
+                  aria-label="Navigate to Features">Features</a
                 >
               </li>
               <li>
                 <a
                   href="#contact"
-                  class="text-gray-400 hover:text-blue-400 transition"
-                  >Contact</a
+                  class="text-gray-200 hover:text-blue-300 transition"
+                  aria-label="Navigate to Contact">Contact</a
                 >
               </li>
             </SignedOut>
@@ -70,21 +71,23 @@ const { pathname } = Astro.url
               <li>
                 <a
                   href="/safe/my-files"
-                  class={`text-gray-400 hover:text-blue-400 transition ${
+                  class={`text-gray-200 hover:text-blue-300 transition ${
                     pathname === '/safe/my-files'
-                      ? 'font-bold text-blue-400'
+                      ? 'font-bold text-blue-300'
                       : ''
-                  }`}>My Files</a
+                  }`}
+                  aria-label="Navigate to My Files">My Files</a
                 >
               </li>
               <li>
                 <a
                   href="/safe/shared-with-me"
-                  class={`text-gray-400 hover:text-blue-400 transition ${
+                  class={`text-gray-200 hover:text-blue-300 transition ${
                     pathname === '/safe/shared-with-me'
-                      ? 'font-bold text-blue-400'
+                      ? 'font-bold text-blue-300'
                       : ''
-                  }`}>Shared with Me</a
+                  }`}
+                  aria-label="Navigate to Shared with Me">Shared with Me</a
                 >
               </li>
             </SignedIn>
@@ -93,13 +96,14 @@ const { pathname } = Astro.url
                 <SignInButton asChild mode="modal">
                   <button
                     class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition duration-200 cursor-pointer"
+                    aria-label="Log In"
                   >
                     Log In
                   </button>
                 </SignInButton>
               </SignedOut>
               <SignedIn>
-                <UserButton />
+                <UserButton aria-label="User Menu" />
               </SignedIn>
             </li>
           </ul>
