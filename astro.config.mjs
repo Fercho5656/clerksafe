@@ -9,7 +9,7 @@ export default defineConfig({
   integrations: [clerk(), vue()],
   output: 'server',
   server: {
-    allowedHosts: [import.meta.env.CLERK_WEBHOOK_URL]
+    allowedHosts: true
   },
   vite: {
     plugins: [tailwindcss()],
