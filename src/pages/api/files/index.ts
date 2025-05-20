@@ -32,6 +32,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
   const supabase = await supabaseServer(locals)
 
   const data = await request.formData()
+  const uploadedData = []
 
   for (const [key, value] of data.entries()) {
     if (!(value instanceof File)) {
@@ -62,16 +63,19 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     // Add to file table
-    const { error: insertError } = await supabase.from('files').insert([
-      {
-        created_by: userId,
-        bucket_name: 'userfiles',
-        object_path: filePath,
-        file_name: fileName,
-        size: file.size,
-        thumbnail,
-      },
-    ])
+    const { data: uploadFileData, error: insertError } = await supabase
+      .from('files')
+      .insert([
+        {
+          created_by: userId,
+          bucket_name: 'userfiles',
+          object_path: filePath,
+          file_name: fileName,
+          size: file.size,
+          thumbnail,
+        },
+      ])
+      .select()
 
     if (insertError) {
       console.error('Error inserting file record:', insertError)
@@ -82,10 +86,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
     }
 
     console.log('File uploaded successfully:', uploadData)
+    uploadedData.push({
+      ...uploadFileData[0],
+    })
   }
 
   return new Response(
-    JSON.stringify({ message: 'Files uploaded successfully' }),
+    JSON.stringify({
+      message: 'Files uploaded successfully',
+      data: uploadedData,
+    }),
     {
       status: 200,
       headers: {
@@ -132,26 +142,6 @@ export const DELETE: APIRoute = async ({ request, locals }) => {
     console.error('Error deleting file record:', deleteError)
     return new Response(
       JSON.stringify({ error: 'Error deleting file record' }),
-      {
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    )
-  }
-
-  // Remove from shares table
-  const { error: shareError } = await supabase
-    .from('shares')
-    .delete()
-    .eq('file_name', filePath)
-    .eq('created_by', userId)
-
-  if (shareError) {
-    console.error('Error deleting share record:', shareError)
-    return new Response(
-      JSON.stringify({ error: 'Error deleting share record' }),
       {
         status: 500,
         headers: {

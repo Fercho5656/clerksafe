@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import File from '@/components/File.vue'
-import type FileObject from '@supabase/supabase-js'
+import { $newFile } from '@/store/files'
 import { ref } from 'vue'
 
 interface Props {
@@ -17,11 +17,17 @@ interface Props {
 
 const props = defineProps<Props>()
 
-console.log({ props })
-
 const fileArray = ref(props.files)
 
+$newFile.subscribe((newFiles) => {
+  if (newFiles.length > 0) {
+    const newArray = [...fileArray.value, ...newFiles]
+    fileArray.value = newArray
+  }
+})
+
 const removeFile = (fileName: string) => {
-  fileArray.value = fileArray.value.filter((file) => file.name !== fileName)
+  const newArray = fileArray.value.filter((file) => file.file_name !== fileName)
+  fileArray.value = newArray
 }
 </script>
