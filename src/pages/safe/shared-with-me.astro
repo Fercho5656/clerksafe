@@ -20,18 +20,6 @@ const files = filesSharedWithMe.map((file) => file.files)
 ---
 
 <Layout title="Shared With Me">
-  <header>
-    <nav>
-      <div
-        class="container mx-auto px-4 py-5 flex justify-between items-center"
-      >
-        <h1 class="text-xl font-bold text-gray-800">Files Shared With Me</h1>
-        <div>
-          <UserButton />
-        </div>
-      </div>
-    </nav>
-  </header>
   <FilesGrid client:load files={files} :isMyOwnFile={false} />
   <ShareDialog client:load />
 </Layout>
