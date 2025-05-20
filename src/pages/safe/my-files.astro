@@ -3,9 +3,10 @@ import FileUpload from '@/components/FileUpload.vue'
 import Layout from '@/layouts/Layout.astro'
 import { fetchUserFiles } from '@/lib/db/files'
 import { supabaseServer } from '@/lib/supabase'
-import { UserButton } from '@clerk/astro/components'
 import FilesGrid from '@/components/FilesGrid.vue'
 import ShareDialog from '@/components/ShareDialog.vue'
+import UploadFilesDialog from '@/components/UploadFilesDialog.vue'
+import UploadButton from '@/components/UploadButton.vue'
 
 const supabase = await supabaseServer(Astro.locals)
 
@@ -17,9 +18,10 @@ const files = await fetchUserFiles(user.id, supabase)
 
 <Layout title="My Files">
   <div class="mb-8">
-    <FileUpload client:load />
+    <UploadFilesDialog client:load />
   </div>
-  <div class="container">
+  <UploadButton client:load />
+  <div class="container mx-auto">
     <FilesGrid client:load files={files} isMyOwnFile />
     <ShareDialog client:load />
   </div>
