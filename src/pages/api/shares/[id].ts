@@ -40,18 +40,18 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
 
   const { id } = params
   const supabase = await supabaseServer(locals)
-  const body = await request.json()
+  const formData = await request.formData()
 
-  const { requires_mfa, expiration_date } = body
+  const requires_mfa = formData.get('requires_mfa') === 'true'
+  const expires_at = formData.get('expires_at')
 
   const { data, error } = await supabase
     .from('shares')
     .update({
       requires_mfa,
-      expiration_date,
+      expires_at,
     })
     .eq('id', id)
-    .eq('file_id', body.file_id)
 
   if (error) {
     console.error('Error updating share:', error)

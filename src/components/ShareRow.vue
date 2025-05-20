@@ -55,17 +55,16 @@ const expireDate = ref(props.share.expires_at ? new Date(props.share.expires_at!
 const handleMFAChange = async () => {
   // Logic to handle MFA change
   console.log(`MFA changed to: ${hasMFA.value}`)
+  await updateShare(props.share.id)
 }
 
 const handleExpireDateChange = async () => {
   // Logic to handle expiration date change
   console.log(`Expiration date changed to: ${expireDate.value}`)
+  await updateShare(props.share.id)
 }
 
 const deleteShare = async (id: string) => {
-  // Logic to delete the share
-  console.log(`Deleting share with ID: ${id}`)
-
   try {
     const response = await fetch(`/api/shares/${id}`, {
       method: 'DELETE',
@@ -79,6 +78,33 @@ const deleteShare = async (id: string) => {
     console.log(`Share with ID ${id} deleted successfully`)
   } catch (error) {
     console.error('Error deleting share:', error)
+  }
+}
+
+async function updateShare(id: string) {
+
+  const data = new FormData()
+  if (expireDate.value) {
+    data.append('expires_at', new Date(expireDate.value).toISOString())
+  }
+  if (hasMFA.value) {
+    data.append('requires_mfa', hasMFA.value ? 'true' : 'false')
+  }
+
+  try {
+    const response = await fetch(`/api/shares/${id}`, {
+      method: 'PUT',
+      body: data,
+    })
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+
+    // Optionally, you can handle the response or update the UI
+    console.log(`Share with ID ${id} updated successfully`)
+  } catch (error) {
+    console.error('Error updating share:', error)
   }
 }
 </script>
