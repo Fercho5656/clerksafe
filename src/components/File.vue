@@ -123,6 +123,7 @@ const handleShareClick = () => {
   $shareFile.set({
     fileId: props.file.id,
     fileName: props.file.object_path,
+    name: props.file.file_name
   })
   $shareModal.set(true)
 }
