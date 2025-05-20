@@ -7,11 +7,12 @@
 
 <script setup lang="ts">
 import File from '@/components/File.vue'
+import type { File as FileType } from '@/models/file'
 import { $newFile } from '@/store/files'
 import { ref } from 'vue'
 
 interface Props {
-  files: Record<string, any>[]
+  files: FileType[]
   isMyOwnFile?: boolean
 }
 
