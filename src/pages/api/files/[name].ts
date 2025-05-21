@@ -79,7 +79,10 @@ export const GET: APIRoute = async (context) => {
     }
   }
 
-  if (new Date(fileShare[0]?.expires_at) < new Date()) {
+  if (
+    file.created_by !== userId &&
+    new Date(fileShare[0]?.expires_at) < new Date()
+  ) {
     return new Response(JSON.stringify({ error: 'File share has expired' }), {
       status: 403,
       headers: { 'Content-Type': 'application/json' },

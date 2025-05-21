@@ -54,8 +54,9 @@ const props = defineProps<Props>();
 const emits = defineEmits(['file-deleted']);
 
 async function downloadFile() {
+  let response
   try {
-    const response = await fetch(`/api/files/${props.file.id}`);
+    response = await fetch(`/api/files/${props.file.id}`);
     if (!response.ok) throw new Error('Network response was not ok');
     const blob = await response.blob();
     const url = URL.createObjectURL(blob);
@@ -68,10 +69,17 @@ async function downloadFile() {
     a.click();
     a.remove();
   } catch (error) {
-    console.error('Error downloading file:', error);
-    toast.error({
-      text: error.message,
-    });
+    if (response) {
+      const errorText = await response.text();
+      console.error('Error downloading file:', { error, errorText });
+      toast.error({
+        text: "Error downloading file",
+        description: errorText,
+      });
+    } else {
+      console.error('Error downloading file:', { error });
+    }
+
   }
 }
 
