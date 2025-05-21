@@ -39,7 +39,7 @@ export const GET: APIRoute = async (context) => {
 
   const { data: fileShare, error: fileShareError } = await supabase
     .from('shares')
-    .select('requires_mfa, users(*)')
+    .select('requires_mfa, expires_at, users(*)')
     .eq('file_id', file.id)
     .eq('users.id', userId)
 
@@ -77,6 +77,13 @@ export const GET: APIRoute = async (context) => {
         headers: { 'Content-Type': 'application/json' },
       })
     }
+  }
+
+  if (new Date(fileShare[0]?.expires_at) < new Date()) {
+    return new Response(JSON.stringify({ error: 'File share has expired' }), {
+      status: 403,
+      headers: { 'Content-Type': 'application/json' },
+    })
   }
 
   // if the user is not the owner of the file and the share doesn't include the user

@@ -70,7 +70,7 @@ async function downloadFile() {
   } catch (error) {
     console.error('Error downloading file:', error);
     toast.error({
-      text: 'Error downloading file',
+      text: error.message,
     });
   }
 }
