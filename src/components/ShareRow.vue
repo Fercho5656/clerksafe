@@ -45,6 +45,7 @@
 </template>
 
 <script setup lang="ts">
+import { toast } from '@pheralb/toast'
 import type { ShareWithUserAndFile } from '@/models/share';
 import { ref } from 'vue'
 
@@ -53,6 +54,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const emits = defineEmits(['share-deleted'])
 
 const hasMFA = ref(props.share.requires_mfa)
 const expireDate = ref(props.share.expires_at ? new Date(props.share.expires_at!).toISOString().split('T')[0] : undefined)
@@ -81,8 +83,15 @@ const deleteShare = async (id: string) => {
 
     // Optionally, you can handle the response or update the UI
     console.log(`Share with ID ${id} deleted successfully`)
+    emits('share-deleted', id)
+    toast.success({
+      text: 'Share deleted successfully',
+    })
   } catch (error) {
     console.error('Error deleting share:', error)
+    toast.error({
+      text: 'Error deleting share',
+    })
   }
 }
 

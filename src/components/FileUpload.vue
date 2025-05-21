@@ -19,7 +19,9 @@
 </template>
 
 <script setup lang="ts">
+import { toast } from '@pheralb/toast'
 import { $newFile } from '@/store/files'
+import { $uploadFileModal } from '@/store/files'
 import { ref } from 'vue'
 
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -46,8 +48,15 @@ const handleSubmit = async () => {
 
     const result = await response.json()
     $newFile.set(result.data)
+    $uploadFileModal.set(false)
+    toast.success({
+      text: "Files uploaded successfully",
+    });
   } catch (e) {
     console.error('Error uploading files:', e)
+    toast.error({
+      text: "Error uploading files",
+    });
   }
 }
 </script>

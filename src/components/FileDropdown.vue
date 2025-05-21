@@ -39,6 +39,7 @@
 <script setup lang="ts">
 import DropdownMenu from '@/components/ui/DropdownMenu.vue';
 import { $shareModal, $shareFile } from '@/store/share';
+import { toast } from '@pheralb/toast';
 
 interface Props {
   file: {
@@ -68,6 +69,9 @@ async function downloadFile() {
     a.remove();
   } catch (error) {
     console.error('Error downloading file:', error);
+    toast.error({
+      text: 'Error downloading file',
+    });
   }
 }
 
@@ -80,8 +84,14 @@ async function deleteFile() {
     if (!response.ok) throw new Error('Network response was not ok');
     console.log('File deleted:', props.file.file_name);
     emits('file-deleted', props.file.file_name);
+    toast.success({
+      text: 'File deleted successfully',
+    });
   } catch (error) {
     console.error('Error deleting file:', error);
+    toast.error({
+      text: 'Error deleting file',
+    });
   }
 }
 

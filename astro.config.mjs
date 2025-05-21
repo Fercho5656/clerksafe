@@ -4,10 +4,11 @@ import clerk from '@clerk/astro'
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@astrojs/vue'
 import vercel from '@astrojs/vercel'
+import react from '@astrojs/react'
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [clerk(), vue()],
+  integrations: [clerk(), vue(), react()],
   output: 'server',
 
   server: {

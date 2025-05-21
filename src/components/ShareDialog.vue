@@ -5,6 +5,7 @@ import { useStore } from '@nanostores/vue';
 import Dialog from '@/components/ui/Dialog.vue';
 import ShareRow from './ShareRow.vue';
 import type { ShareWithUserAndFile } from '@/models/share';
+import { toast } from '@pheralb/toast';
 
 const showModal = useStore($shareModal);
 const shareFile = useStore($shareFile);
@@ -57,9 +58,20 @@ const handleCreateShareForm = async (event: Event) => {
 
     const data = await response.json()
     shares.value.push(data[0])
+    toast.success({
+      text: 'Share created successfully',
+    })
   } catch (error) {
     console.error('Error creating share:', error)
+    toast.error({
+      text: 'Error creating share',
+    })
   }
+}
+
+const handleDeleteShare = (id: string) => {
+  const newArray = shares.value.filter((share) => share.id !== id)
+  shares.value = newArray
 }
 </script>
 
@@ -82,7 +94,7 @@ const handleCreateShareForm = async (event: Event) => {
         <ul class="w-full divide-y divide-gray-700">
           <li v-for="share in shares" :key="share.id"
             class="flex items-center justify-between py-4 px-4 bg-gray-800 rounded transition-colors duration-200">
-            <ShareRow :share="share" />
+            <ShareRow :share="share" @share-deleted="handleDeleteShare" />
           </li>
         </ul>
       </div>
