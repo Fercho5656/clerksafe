@@ -45,9 +45,9 @@ const handleCreateShareForm = async (event: Event) => {
   event.preventDefault()
   const formData = new FormData(event.target as HTMLFormElement)
   formData.append('file_id', shareFile.value.fileId)
-
+  let response
   try {
-    const response = await fetch('/api/shares', {
+    response = await fetch('/api/shares', {
       method: 'POST',
       body: formData
     })
@@ -62,9 +62,11 @@ const handleCreateShareForm = async (event: Event) => {
       text: 'Share created successfully',
     })
   } catch (error) {
+    const errorMessage = await response?.text()
+    console.log({ errorMessage })
     console.error('Error creating share:', error)
     toast.error({
-      text: 'Error creating share',
+      text: errorMessage || 'Error creating share',
     })
   }
 }

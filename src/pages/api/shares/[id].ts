@@ -55,7 +55,7 @@ export const PUT: APIRoute = async ({ params, request, locals }) => {
 
   if (error) {
     console.error('Error updating share:', error)
-    return new Response(JSON.stringify({ error: 'Error updating share' }), {
+    return new Response('Error updating share', {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     })
@@ -81,7 +81,7 @@ export const DELETE: APIRoute = async ({ params, locals }) => {
 
   if (error) {
     console.error('Error deleting share:', error)
-    return new Response(JSON.stringify({ error: 'Error deleting share' }), {
+    return new Response('Error deleting share', {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     })

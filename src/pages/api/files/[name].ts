@@ -29,7 +29,7 @@ export const GET: APIRoute = async (context) => {
 
   if (fileError) {
     console.error('Error fetching file:', fileError)
-    return new Response(JSON.stringify({ error: 'Error fetching file' }), {
+    return new Response('Error fetching file', {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     })
@@ -65,14 +65,14 @@ export const GET: APIRoute = async (context) => {
       }
 
       if (!clerkUser.twoFactorEnabled) {
-        return new Response(JSON.stringify({ error: 'MFA is required' }), {
+        return new Response('MFA is required', {
           status: 403,
           headers: { 'Content-Type': 'application/json' },
         })
       }
     } catch (e) {
       console.error('Error fetching MFA:', e)
-      return new Response(JSON.stringify({ error: 'Error fetching MFA' }), {
+      return new Response('Error fetching MFA', {
         status: 500,
         headers: { 'Content-Type': 'application/json' },
       })
@@ -83,7 +83,7 @@ export const GET: APIRoute = async (context) => {
     file.created_by !== userId &&
     new Date(fileShare[0]?.expires_at) < new Date()
   ) {
-    return new Response(JSON.stringify({ error: 'File share has expired' }), {
+    return new Response('File share has expired', {
       status: 403,
       headers: { 'Content-Type': 'application/json' },
     })
@@ -96,13 +96,10 @@ export const GET: APIRoute = async (context) => {
     (!fileShare[0]?.users || fileShare[0]?.users?.id !== userId)
   ) {
     console.log('userId', userId)
-    return new Response(
-      JSON.stringify({ error: 'File is not being shared with you anymore' }),
-      {
-        status: 403,
-        headers: { 'Content-Type': 'application/json' },
-      },
-    )
+    return new Response('File is not being shared with you anymore', {
+      status: 403,
+      headers: { 'Content-Type': 'application/json' },
+    })
   }
 
   const { object_path } = file
@@ -113,7 +110,7 @@ export const GET: APIRoute = async (context) => {
 
   if (error) {
     console.error('Error downloading file:', error)
-    return new Response(JSON.stringify({ error: 'Error downloading file' }), {
+    return new Response('Error downloading file', {
       status: 500,
       headers: {
         'Content-Type': 'application/json',

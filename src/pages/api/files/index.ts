@@ -124,7 +124,7 @@ export const DELETE: APIRoute = async ({ request, locals }) => {
 
   if (error) {
     console.error('Error deleting file:', error)
-    return new Response(JSON.stringify({ error: 'Error deleting file' }), {
+    return new Response('Error deleting file', {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
